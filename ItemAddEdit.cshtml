@@ -1,0 +1,53 @@
+﻿@model ItemModel
+
+<h2>@ViewData["Title"]</h2>
+
+<form asp-action="ItemSave">
+    <div class="form-group">
+        <label asp-for="Name" class="control-label"></label>
+        <input asp-for="Name" class="form-control" />
+        <span asp-validation-for="Name" class="text-danger"></span>
+    </div>
+
+    <div class="form-group">
+        <label asp-for="Price" class="control-label"></label>
+        <input asp-for="Price" class="form-control" type="number" step="0.01" />
+        <span asp-validation-for="Price" class="text-danger"></span>
+    </div>
+
+    <div class="form-group">
+        <label asp-for="Category" class="control-label"></label>
+        <input asp-for="Category" class="form-control" />
+        <span asp-validation-for="Category" class="text-danger"></span>
+    </div>
+
+    <div class="form-group">
+        <label asp-for="IsAvailable" class="control-label"></label>
+        <input asp-for="IsAvailable" type="checkbox" />
+        <span asp-validation-for="IsAvailable" class="text-danger"></span>
+    </div>
+
+    <div class="form-group">
+        <label asp-for="Features" class="control-label"></label>
+        <textarea asp-for="Features" class="form-control"></textarea>
+        <span asp-validation-for="Features" class="text-danger"></span>
+    </div>
+
+    <div class="form-group">
+        <label asp-for="Tags" class="control-label">Tags (Multi-Select)</label>
+        <select asp-for="Tags" multiple="multiple" class="form-control">
+            @{
+                var allTags = new[] { "Tech", "Portable", "Home" };
+                foreach (var tag in allTags)
+                {
+                    var isSelected = Model.Tags.Contains(tag) ? "selected" : "";
+                    <option value="@tag" selected="@isSelected">@tag</option>
+                }
+            }
+        </select>
+        <span asp-validation-for="Tags" class="text-danger"></span>
+    </div>
+
+    <input type="hidden" asp-for="ItemId" />
+    <button type="submit" class="btn btn-primary">Save</button>
+</form>

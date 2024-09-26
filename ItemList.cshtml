@@ -1,0 +1,53 @@
+﻿@model IEnumerable<ItemModel>
+
+<h2>Items List</h2>
+
+<form method="post" asp-action="MultiDelete">
+    <table class="table table-bordered">
+        <thead>
+        <tr>
+            <th><input type="checkbox" id="selectAll" /></th>
+            <th>Name</th>
+            <th>Price</th>
+            <th>Category</th>
+            <th>Available</th>
+            <th>Features</th>
+            <th>Tags</th>
+            <th>Actions</th>
+        </tr>
+        </thead>
+        <tbody>
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td><input type="checkbox" name="ids" value="@item.ItemId" /></td>
+                <td>@item.Name</td>
+                <td>@item.Price</td>
+                <td>@item.Category</td>
+                <td>@item.IsAvailable</td>
+                <td>@string.Join(", ", item.Features)</td>
+                <td>@item.Tags</td>
+                <td>
+                    <a asp-action="ItemAddEdit" asp-route-id="@item.ItemId">Edit</a> |
+                    <form asp-action="ItemDelete" method="post" style="display:inline">
+                        <input type="hidden" name="id" value="@item.ItemId" />
+                        <button type="submit" class="btn btn-danger btn-sm">Delete</button>
+                    </form>
+                </td>
+            </tr>
+        }
+        </tbody>
+    </table>
+    <button type="submit" class="btn btn-danger">Delete Selected</button>
+</form>
+
+@section Scripts {
+    <script>
+        document.getElementById("selectAll").addEventListener("click", function () {
+            var isChecked = this.checked;
+            document.querySelectorAll("input[name='ids']").forEach(function (checkbox) {
+                checkbox.checked = isChecked;
+            });
+        });
+    </script>
+}

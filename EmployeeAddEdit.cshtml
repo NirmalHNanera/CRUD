@@ -1,0 +1,71 @@
+﻿@model Crud_Practice.Models.EmployeeModel
+@{
+    ViewBag.Title = "Add/Edit Employee";
+}
+
+<form asp-action="EmployeeSave" method="post">
+    <input type="hidden" asp-for="Eid" />
+
+    <div class="form-group">
+        <label asp-for="EName" class="control-label"></label>
+        <input asp-for="EName" class="form-control" />
+        <span asp-validation-for="EName" class="text-danger"></span>
+    </div>
+
+    <div class="form-group">
+        <label asp-for="ECode" class="control-label"></label>
+        <input asp-for="ECode" class="form-control" />
+        <span asp-validation-for="ECode" class="text-danger"></span>
+    </div>
+
+    <select class="form-control" asp-for="DepartmentID" asp-items="@(new SelectList(ViewBag.DepartmentList, "DepartmentID", "DepartmentName"))">
+        <option value="">Select Department</option>
+    </select>
+
+
+    <div class="form-group">
+        <label class="control-label">Gender</label>
+        <div class="form-check">
+            <input type="radio" class="form-check-input" id="genderM" name="Gender" value="M"
+            @(Model.Gender == "M" ? "checked" : "") />
+            <label class="form-check-label" for="genderM">Male</label>
+        </div>
+        <div class="form-check">
+            <input type="radio" class="form-check-input" id="genderF" name="Gender" value="F"
+            @(Model.Gender == "F" ? "checked" : "") />
+            <label class="form-check-label" for="genderF">Female</label>
+        </div>
+        <span asp-validation-for="Gender" class="text-danger"></span>
+    </div>
+
+    <div class="form-group">
+        <label asp-for="Salary" class="control-label"></label>
+        <input asp-for="Salary" class="form-control" value="@(Model.Salary.HasValue ? Model.Salary.Value.ToString("F2") : string.Empty)" />
+        <span asp-validation-for="Salary" class="text-danger"></span>
+    </div>
+
+
+    <div class="form-group">
+        <label>Projects</label>
+        <div class="form-check">
+            <input type="checkbox" class="form-check-input" id="project1" name="SelectedProjects" value="1"
+            @(Model.SelectedProjects != null && Model.SelectedProjects.Contains(1) ? "checked" : "") />
+            <label class="form-check-label" for="project1">Project 1</label>
+        </div>
+        <div class="form-check">
+            <input type="checkbox" class="form-check-input" id="project2" name="SelectedProjects" value="2"
+            @(Model.SelectedProjects != null && Model.SelectedProjects.Contains(2) ? "checked" : "") />
+            <label class="form-check-label" for="project2">Project 2</label>
+        </div>
+        <div class="form-check">
+            <input type="checkbox" class="form-check-input" id="project3" name="SelectedProjects" value="3"
+            @(Model.SelectedProjects != null && Model.SelectedProjects.Contains(3) ? "checked" : "") />
+            <label class="form-check-label" for="project3">Project 3</label>
+        </div>
+        <span asp-validation-for="SelectedProjects" class="text-danger"></span>
+    </div>
+
+    <div class="form-group">
+        <input type="submit" value="Save" class="btn btn-primary" />
+    </div>
+</form>
